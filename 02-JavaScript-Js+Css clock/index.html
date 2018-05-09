@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JS+CSS Clock</title>
+	<link rel="stylesheet" href="index.css">
+</head>
+<body>
+	<div class="clock">
+		<div class="clock-face">
+			<div class="hand hour-hand"></div>
+			<div class="hand min-hand"></div>
+			<div class="hand second-hand"></div>
+		</div>
+	</div>
+</body>
+<script>
+	/*获取三根指针*/
+	var secondHand=document.getElementsByClassName('second-hand')[0];
+	var minHand=document.getElementsByClassName('min-hand')[0];
+	var hourHand=document.getElementsByClassName('hour-hand')[0];
+
+	/*设置时间*/
+	function setDate(){
+		var now=new Date();//Date对象
+
+		var seconds=now.getSeconds();//获取秒
+		var secondsDegrees=((seconds/60)*360)+90;//计算秒针的角度
+
+
+
+		var mins=now.getMinutes();//获取分
+		var minsDegrees=((mins/60)*360)+90;//计算分针的角度
+
+
+
+		var hour=now.getHours();//获取时
+		var hourDegrees= (90 + (hour / 12) * 360 + (mins / 12 / 60) * 360);// 加入分钟所占的时间，使时针可以缓慢地移动
+
+		// 解决指针跳顿问题
+//		在发生跳顿的角度值处，将 CSS 的 `transition` 属性去掉
+		if (secondsDegrees === 90) secondHand.style.transition = 'all 0s';
+		else secondHand.style.transition = 'all 0.05s';
+
+		if (minsDegrees === 90) minHand.style.transition = 'all 0s';
+		else minHand.style.transition = 'all 0.1s';
+
+		secondHand.style.transform='rotate('+secondsDegrees+'deg)';//改变角度
+		minHand.style.transform='rotate('+minsDegrees+'deg)';
+		hourHand.style.transform='rotate('+hourDegrees+'deg)';
+
+	}
+
+	setInterval(setDate, 1000);
+	// setDate();
+</script>
+</html>

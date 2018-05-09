@@ -1,0 +1,84 @@
+@utf-8
+html{
+	font-size: 10px;
+
+	background-size: cover;
+}
+body,html{
+	margin: 0;
+	padding: 0;
+	font-family: sans-serif;
+	background: url(http://i.imgur.com/b9r5sEL.jpg) bottom center;
+}
+.keys{
+	display: flex;
+	flex: 1; /* 让所有弹性盒模型对象的子元素都有相同的长度，忽略它们内部的内容*/
+	min-height: 100vh;/* 相对于视口的高度。视口被均分为100单位的vh */
+	align-items: center;
+	justify-content: center;
+}
+
+.key{
+	border: 4px solid black;
+	border-radius: 5px;
+	margin: 1rem;/* 相对长度单位。相对于根元素(即html元素)font-size计算值的倍数 */
+	font-size: 1.5rem;/*15px*/
+	padding: 1rem .5rem;
+	transition: all .07s; /*即0.07秒后，所有属性发生改变*/
+	width: 100px;
+	text-align: center;
+	color: white;
+	background: rgba(0,0,0,.4);
+	text-shadow: 0 0 5px black;
+}
+.playing{
+	transform:scale(1.1);/*放大1.1倍*/
+	border-color: #ffc600;
+	box-shadow: 0 0 10px #ffc600;
+}
+
+kbd{
+	display: block;
+	font-size: 40px;
+}
+.sound{
+	font-size: 1.2rem;
+	text-transform: uppercase;/*转换文本，为大写*/
+	letter-spacing: 1px;/*字母间距*/
+	color: #ffc600;
+
+}
+
+/*
+.key{
+	width: 32px;
+	height: 32px;
+	border: solid 1px black;
+	display:flex;/* 弹性布局 */
+	/* justify-content: center; */
+	/*justify-content:定义项目在主轴上的对齐方式
+		可取５个值
+		flex-start（默认值）：左对齐
+		flex-end：右对齐
+		center： 居中
+		space-between：两端对齐，项目之间的间隔都相等。
+		space-around：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。
+
+	*/
+	/* align-items: center; */
+	/*align-items: 定义项目在交叉轴上的对齐方式
+		flex-start：交叉轴的起点对齐。
+		flex-end：交叉轴的终点对齐。
+		center：交叉轴的中点对齐。
+		baseline: 项目的第一行文字的基线对齐。
+		stretch（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。
+
+	 */
+/* 	margin-top: 5px;
+	transition: all 0.07s; */
+
+/* } */
+
+/* .playing{
+	width: 100px;
+} */

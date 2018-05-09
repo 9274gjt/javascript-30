@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>JavaScript30-Drum kit</title>
+	<link rel="stylesheet" href="index.css">
+</head>
+<body>
+	<!-- data-* 属性可以用来存储私有自定义数据，kbd标签定义键盘文本-->
+     <div class="keys">
+	    <div data-key="65" class="key">
+	      <kbd>A</kbd>
+	      <span class="sound">clap</span>
+	    </div>
+	    <div data-key="83" class="key">
+	      <kbd>S</kbd>
+	      <span class="sound">hihat</span>
+	    </div>
+	    <div data-key="68" class="key">
+	      <kbd>D</kbd>
+	      <span class="sound">kick</span>
+	    </div>
+	    <div data-key="70" class="key">
+	      <kbd>F</kbd>
+	      <span class="sound">openhat</span>
+	    </div>
+	    <div data-key="71" class="key">
+	      <kbd>G</kbd>
+	      <span class="sound">boom</span>
+	    </div>
+	    <div data-key="72" class="key">
+	      <kbd>H</kbd>
+	      <span class="sound">ride</span>
+	    </div>
+	    <div data-key="74" class="key">
+	      <kbd>J</kbd>
+	      <span class="sound">snare</span>
+	    </div>
+	    <div data-key="75" class="key">
+	      <kbd>K</kbd>
+	      <span class="sound">tom</span>
+	    </div>
+	    <div data-key="76" class="key">
+	      <kbd>L</kbd>
+	      <span class="sound">tink</span>
+	    </div>
+ 	</div>
+
+  <audio data-key="65" src="sounds/clap.wav"></audio>
+  <audio data-key="83" src="sounds/hihat.wav"></audio>
+  <audio data-key="68" src="sounds/kick.wav"></audio>
+  <audio data-key="70" src="sounds/openhat.wav"></audio>
+  <audio data-key="71" src="sounds/boom.wav"></audio>
+  <audio data-key="72" src="sounds/ride.wav"></audio>
+  <audio data-key="74" src="sounds/snare.wav"></audio>
+  <audio data-key="75" src="sounds/tom.wav"></audio>
+  <audio data-key="76" src="sounds/tink.wav"></audio>
+</body>
+<script>
+	var audios=document.getElementsByTagName('audio');//获取audio节点
+	var keys=document.getElementsByClassName('key');//获取key容器
+	function removeTransition(event){
+		if(event.propertyName!=="transform")return;//过滤其中一种事件
+		event.target.setAttribute('class','key');//移除高亮样式
+	}
+	function playSound(event){
+		for(var i=0;i<audios.length;i++){
+			if(audios[i].getAttribute('data-key')==event.keyCode){
+				var audio=audios[i];//获取对应音频
+				var key=keys[i];//获取对应div
+				break;
+			}else{
+				continue;
+			}
+		}
+		if(!audio)return;//处理无效的按键事件
+		key.setAttribute('class',"key playing");//改变样式
+		audio.currentTime=0;//每次播放之后都使音频播放进度归零
+		audio.play();//播放相应音频
+
+		//添加transitionend事件，即css过渡属性
+		key.addEventListener('transitionend',removeTransition);
+	}
+	window.addEventListener('keydown',playSound);//事件名，回调函数
+</script>
+</html>
