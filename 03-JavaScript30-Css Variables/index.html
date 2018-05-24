@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Scoped CSS Variables and JS</title>
+	<link rel="stylesheet" href="index.css">
+</head>
+<body>
+	<h2>Update CSS Variables with <span class="h1">JS</span></h2>
+	<div class="controls">
+		<label for="spacing">Spacing:</label>
+		<input type="range" name="spacing" min="10" max="200" value="10" data-sizing="px">
+
+
+		<label for="blur">Blur:</label>
+		<!-- data-*是自定义属性 -->
+		<input type="range" name="blur" min="0" max="25" value="10" data-sizing="px">
+
+		<label for="base">Base Color</label>
+		<input type="color" name="base" value="#8aa8af">
+		<br>
+		<code class="result">
+			img {
+				padding: <label id="code-spacing">10px</label>;
+				filter: blur(<label id="code-blur">10px</label>);
+				background: <label id="code-base">#8aa8af</label>;
+			}
+		</code>
+	</div>
+	<img src="http://ofjku7mlm.bkt.clouddn.com/16-12-22/39048308-file_1482385934460_1316f.jpg">
+</body>
+<script>
+	var inputs=document.getElementsByTagName('input');
+
+	function handleUpdate(){
+		var suffix=this.dataset.sizing||'';//根据data-sizing获取参数的后缀
+		// console.log(this);
+		document.documentElement.style.setProperty('--'+this.name,this.value+suffix);
+		document.getElementById('code-'+this.name).innerText=this.value+suffix;
+	}
+	for(var i=0;i<inputs.length;i++){
+		inputs[i].addEventListener('change', handleUpdate);
+		// inputs[i].addEventListener('mousemove',handleUpdate);
+	}
+</script>
+</html>

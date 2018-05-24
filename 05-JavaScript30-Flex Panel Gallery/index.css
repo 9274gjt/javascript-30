@@ -1,0 +1,86 @@
+html{
+	box-sizing: border-box;
+	background: #ffc600;
+	font-family: 'helvetica neue';
+	font-size: 20px;
+	font-weight: 200;
+}
+body{
+	margin: 0;
+}
+*,*:before,*:after{
+	box-sizing:inherit;
+}
+.panels{
+	min-height: 100vh;
+	overflow: hidden;
+	display: flex;/*容器为flex布局*/
+}
+.panel{
+	/*	调试时添加边框以便分辨*/
+	/* border: 1px solid #f00; */
+	background: #6b0f9c;
+	box-shadow: inset 0 0 0 5px rgba(255,255,255,.1);
+	color: white;
+	text-align: center;
+	align-items: center;
+	transition: 
+		font-size 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+        flex 0.7s cubic-bezier(0.61,-0.19, 0.7,-0.11),
+        background 0.2s;
+   font-size: 20px;
+   background-size: cover;
+   background-position: center;
+   flex: 1;	/*每个子panel设置等宽*/
+   display: flex;/*设置子panel为flex布局*/
+   justify-content:center;/*沿主轴的对齐方式*/
+   flex-direction: column;/*设置主轴方向为竖着排,即里面三个p的排列方式*/
+}
+
+   .panel1 { background-image:url(https://source.unsplash.com/UdgvzNom0Xs/1500x1500); }
+   .panel2 { background-image:url(https://source.unsplash.com/fHXP17AxOEk/1500x1500); }
+   .panel3 { background-image:url(https://source.unsplash.com/3IEZsaXmzzs/1500x1500); }
+   .panel4 { background-image:url(https://source.unsplash.com/tNDvFkxkBHo/1500x1500); }
+   .panel5 { background-image:url(https://source.unsplash.com/GEJxI_QRPwM/1500x1500); }
+
+	.panel > * {
+		margin: 0;
+		width: 100%;
+		transition: transform 0.5s 0.7s;
+		align-items: center;
+		display: flex;
+		flex: 1 0 auto;/*即flex-grow=1(默认为0表示不放大,1表示放大),flex-shrink=0（默认为1，表示缩小，0表示不缩小）,flex-basis=auto*/
+		justify-content: center;
+	}
+
+	.panel p{
+		text-transform: uppercase;
+		font-family: 'Amatic SC',cursive;
+		text-shadow: 0 04px rgba(0,0,0,0.72),0 0 14px rgba(0,0,0,0.45);
+		font-size: 2em;
+	}
+
+	.panel p:nth-child(2){   /* 让第二个p子节点字体变大 */
+		font-size: 4em;
+	}
+
+	.panel.open{  /*定义点击后打开的样式*/
+		font-size: 40px;
+		flex: 5;
+	}
+
+	.panel p:first-child{
+		transform: translateY(-100%);/*第一个p上移出浏览器*/
+	}
+
+	.panel p:last-child{
+		transform: translateY(100%);/*第三个p下移出浏览器*/
+	}
+
+    .panel.open p:first-child {/*打开后第一个p下移回浏览器*/
+    	transform: translateY(0);
+    }
+    
+    .panel.open p:last-child {/*打开后第三个p上移回浏览器*/
+    	transform: translateY(0);
+    }

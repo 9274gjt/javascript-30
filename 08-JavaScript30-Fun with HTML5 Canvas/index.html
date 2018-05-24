@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>HTML5 Canvas</title>
+	<style>
+		html,body{
+			margin: 0;
+			overflow: hidden;
+		}
+		canvas{
+			overflow: hidden;
+		}
+	</style>
+</head>
+<body>
+	<!--新建画布-->
+	<canvas id="draw" width="800" height="800" style="overflow:auto;"></canvas>
+</body>
+<script>
+	var canvas=document.getElementById('draw');//获取画布
+	var ctx=canvas.getContext('2d');//获取上下文，返回画布对象
+	canvas.width=window.innerWidth;
+	canvas.height=window.innerHeight;
+
+	var isDrawing = false;//是否画画的标志
+	var lastX=0;//初始坐标
+	var lastY=0;
+
+	ctx.lineWidth=90; //定义笔触的宽度
+	ctx.lineCap="round";//定义笔触的形状为圆形
+	ctx.lineJoin="round";//定义转折为圆角
+	ctx.strokeStyle="#f00";//线条描边颜色
+	ctx.fillStyle="#f00";//线条填充颜色
+
+	var hue=0;//HSL色彩的H
+	var direction=true;//定义方向
+	var x=0;
+	var y=0;
+
+	function draw (e) {
+		// body...
+		if(!isDrawing)return;
+
+		if(e.type=="mousemove"){//pc端鼠标事件
+			x=e.offsetX;
+			y=e.offsetY;
+		}else{
+			//触屏事件
+			x=e.changedTouches[0].clientX;
+			y=e.changedTouches[0].clientY;
+		}
+
+		//彩虹效果
+		ctx.strokeStyle='hsl('+hue+',90%,50%)';
+		if(hue>=360)hue=0;
+		hue++;
+
+		//水墨效果
+		// ctx.strokeStyle = 'rgba(0,0,0,'+hue+')';
+		// if(hue >= 0.7) hue = 0;
+		// hue += 0.01;
+
+		//控制笔触大小
+		if(ctx.lineWidth > 120 || ctx.lineWidth < 10){
+			direction=!direction;
+		}
+
+		//如果超过这个范围就缩小
+		if(direction){
+			ctx.lineWidth++;
+		}else{
+			ctx.lineWidth--;
+		}
+
+		ctx.beginPath();//控制绘制路径
+
+		ctx.moveTo(lastX,lastY);//设置开始的点
+		ctx.lineTo(x,y);//加上线条
+		ctx.stroke();
+
+		[lastX,lastY]=[x,y];
+	}
+
+
+	//点击鼠标，设置绘制开关，并获取
+	canvas.addEventListener('mousedown',function(e){
+		isDrawing = true;
+		[lastX,lastY]=[e.offsetX,e.offsetY];
+	});
+	//鼠标移动，则开始绘制
+	canvas.addEventListener('mousemove',draw);
+
+	//鼠标松开，则停止绘制
+	canvas.addEventListener('mouseup',function(){
+		return isDrawing=false;
+	});
+	//鼠标移出屏幕
+	canvas.addEventListener('mouseout',function(){
+		return isDrawing=false;
+	});
+
+
+	/*触屏事件*/
+	canvas.addEventListener('touchstart',function(e){
+		isDrawing=true;
+		lastX=e.changedTouches[0].clientX;
+		lastY=e.changedTouches[0].clientY;
+	});
+	canvas.addEventListener('touchmove',draw);
+	canvas.addEventListener('touchend',function(){
+		return isDrawing=false;
+	});
+	canvas.addEventListener('touchcancel',function(){
+		return isDrawing=false;
+	});
+</script>
+</html>

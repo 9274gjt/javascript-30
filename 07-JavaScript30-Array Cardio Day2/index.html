@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Array Cardio 💪💪</title>
+</head>
+<body>
+	 <p><em>请按 F12 查看 Console 面板</em> 💁</p>
+  <p>若无结果请刷新试试</p>
+</body>
+<script>
+	var people=[
+	  { name: 'Wes', year: 1988 },
+      { name: 'Kait', year: 1986 },
+      { name: 'Irv', year: 1970 },
+      { name: 'Lux', year: 2015 }
+	];
+    var comments = [
+      { text: 'Love this!', id: 523423 },
+      { text: 'Super good', id: 823423 },
+      { text: 'You are the best', id: 2039842 },
+      { text: 'Ramen is my fav food ever', id: 123523 },
+      { text: 'Nice Nice Nice!', id: 542328 }
+    ];
+
+
+    //some 和 every 检测
+    //some检测出至少有一人超过19岁，则返回true
+    var isAdult=people.some(
+    	function(person){
+    		var currentYear=(new Date()).getFullYear();
+    		return currentYear-person.year>=19;
+    	});
+   console.log({isAdult});
+
+   //every只有全部都是成年人才会返回true
+   var allAdult=people.every(function(person){
+		var currentYear=(new Date()).getFullYear();
+		return currentYear-person.year>=19;
+   });
+   console.log({allAdult});
+
+
+   //find和findIndex
+   //find返回元素值
+   var comment=comments.find(function(comment){
+   		return comment.id==823423
+   })
+   console.log(comment);
+
+   //findIndex返回元素索引
+   var index=comments.findIndex(function(comment){
+   		return comment.id==823423
+   })
+   console.log(index);
+
+
+   //splice()删除方法
+   // comments.splice(index,1);
+   // console.table(comments);
+
+
+   //slice()拼接
+   var newComments = [
+		...comments.slice(0, index),
+		...comments.slice(index + 1)
+	];
+	console.table(newComments);
+</script>
+</html>

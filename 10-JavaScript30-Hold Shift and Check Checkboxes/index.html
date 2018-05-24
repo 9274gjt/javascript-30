@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Shift 多选</title>
+	<link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div class="inbox">
+	    <div class="item">
+	      <input type="checkbox">
+	      <p>这是一个邮件收件箱</p>
+	    </div>
+	    <div class="item">
+	      <input type="checkbox">
+	      <p>选中一项</p>
+	    </div>
+	    <div class="item">
+	      <input type="checkbox">
+	      <p>然后按住 Shift 键</p>
+	    </div>
+	    <div class="item">
+	      <input type="checkbox">
+	      <p>选择另外一项</p>
+	    </div>
+	    <div class="item">
+	      <input type="checkbox">
+	      <p>它们之间的都会被选中</p>
+	    </div>
+	    <div class="item">
+	      <input type="checkbox">
+	      <p>试着实现这个功能</p>
+	    </div>
+	    <div class="item">
+	      <input type="checkbox">
+	      <p>只用原生 JS </p>
+	    </div>
+	    <div class="item">
+	      <input type="checkbox">
+	      <p>Good Luck!</p>
+	    </div>
+	    <div class="item">
+	      <input type="checkbox">
+	      <p>记得展示你的成果♪(^∇^*)</p>
+	    </div>
+  </div>
+</body>
+<script>
+	var boxs=document.getElementsByTagName('input');
+	var lastChecked;
+
+	//处理方法一：用变量inBetween 对需要选中的元素进行标记
+	function handleCheck0(e){
+		var inBetween = false;
+		if(e.shiftKey && this.checked){
+			for(var i=0;i<boxs.length;i++){
+				// console.log(boxs[i]);
+				if(boxs[i]===lastChecked || boxs[i]===this){
+					inBetween=!inBetween;
+				}
+				if(inBetween){
+					boxs[i].checked=true;
+				}
+			}
+
+		}
+		lastChecked = this;
+	 }
+
+	 //处理方法二：利用数组索引获取需要选中的范围
+	 var boxArr = Array.from(boxs);
+	 function handleCheck1(e){
+	 	if(!lastChecked) lastChecked = this;
+	 	onOff = lastChecked.checked ? true : false;
+	 	if(e.shiftKey){
+	 		var start = boxArr.indexOf(this);
+	 		console.log(start);
+	 		var end = boxArr.indexOf(lastChecked);
+	 		var s=Math.min(start,end)
+	 		var e=Math.max(start,end)+1;
+	 		for(var i=s;i<e;i++){
+	 			boxs[i].checked=true;
+	 		}
+	 	}
+	 	lastChecked = this;
+	 }
+
+	 for(var i=0;i<boxs.length;i++){
+	 	boxs[i].addEventListener('click',handleCheck1);
+	 }
+
+</script>
+</html>
